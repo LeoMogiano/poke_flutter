@@ -6,6 +6,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //screen size
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('HomeScreen'),
@@ -23,10 +25,13 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            // navigator
+
             FloatingActionButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const PokeScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PokeScreen()));
               },
               backgroundColor: Colors.blue,
               child: const Icon(Icons.arrow_forward_ios),

@@ -25,19 +25,28 @@ class PokeService extends ChangeNotifier {
           .get(Uri.parse('https://pokeapi.co/api/v2/pokemon?limit=10'));
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        final results = data['results'] as List;
+        final results = data['results'] as List? ?? [];
 
         for (var result in results) {
           final pokemonDetailsResponse =
               await http.get(Uri.parse(result['url']));
           if (pokemonDetailsResponse.statusCode == 200) {
             final pokemonDetails = json.decode(pokemonDetailsResponse.body);
+            print(pokemonDetails);
             final pokemonName = result['name'];
-            final pokemonDescription = pokemonDetails['species']
-                ['flavor_text_entries'][0]['flavor_text'];
-            final pokemonTypes = <String>[for (var typeEntry in pokemonDetails['types']) typeEntry['type']['name']];
+            final pokemonDescription =
+                pokemonDetails['species']?['flavor_text_entries']?.isNotEmpty ==
+                        true
+                    ? pokemonDetails['species']['flavor_text_entries'][0]
+                        ['flavor_text']
+                    : '';
+            final pokemonTypes = <String>[
+              for (var typeEntry in pokemonDetails['types'] ?? [])
+                typeEntry['type']['name']
+            ];
+
             final pokemonUrl =
-                'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${result['url'].split('/').last}.png';
+    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${result['url'].split('/').lastWhere((element) => (element as String).isNotEmpty, orElse: () => '')}.png';
 
             pokemones.add(Pokemon(
               name: pokemonName,
@@ -46,6 +55,11 @@ class PokeService extends ChangeNotifier {
               imageUrl: pokemonUrl,
             ));
           }
+        }
+
+// Imprimir los enlaces de las imágenes
+        for (var pokemon in pokemones) {
+          print(pokemon.imageUrl);
         }
 
         return pokemones;
