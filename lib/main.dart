@@ -32,6 +32,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: MaterialApp(
+           theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor:  Color(0xFF0075BE),
+          
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: AppRoutes.initialRoute,
       routes: AppRoutes.getAppRoutes(),

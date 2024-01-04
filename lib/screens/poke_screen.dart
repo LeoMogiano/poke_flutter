@@ -13,15 +13,29 @@ class PokeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'PokeMonk',
-          style: GoogleFonts.pressStart2p(fontSize: 20),
+        title: RichText(
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Poke',
+                style: GoogleFonts.pressStart2p(
+                  fontSize: 20,
+                  color: const Color(0xFFFF0000),
+                ),
+              ),
+              TextSpan(
+                text: 'Mon',
+                style: GoogleFonts.pressStart2p(
+                  fontSize: 20,
+                  color: const Color(0XFFFFCC00), 
+                ),
+              ),
+            ],
+          ),
         ),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
       ),
       body: Center(
-        child: SingleChildScrollView(
+        child: Container(
           padding: const EdgeInsetsDirectional.symmetric(vertical: 20),
           child: (pokeService.isLoading)
               ? const CircularProgressIndicator()
@@ -29,15 +43,13 @@ class PokeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: (pokeService.pokemones.length / 2).ceil(),
                   itemBuilder: (BuildContext context, int index) {
+
                     final startIndex = index * 2;
                     final endIndex = startIndex + 2;
-                    final pokemonsToShow =
-                        pokeService.pokemones.sublist(startIndex, endIndex);
+                    final pokemonsToShow = pokeService.pokemones.sublist(startIndex, endIndex);
 
-                    return Row(
-                      
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      
+                    return Row(             
+                      mainAxisAlignment: MainAxisAlignment.center,    
                       children: pokemonsToShow
                           .map(
                             (pokemon) => Expanded(
@@ -49,8 +61,7 @@ class PokeScreen extends StatelessWidget {
                                 types: pokemon.types,
                               ),
                             ),
-                          )
-                          .toList(),
+                          ).toList(),
                     );
                   },
                 ),

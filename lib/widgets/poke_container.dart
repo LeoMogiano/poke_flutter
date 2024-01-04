@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class PokeContainer extends StatelessWidget {
-   PokeContainer({
+   const PokeContainer({
     super.key,
     required this.size,
     required this.name,
@@ -17,14 +17,53 @@ class PokeContainer extends StatelessWidget {
   final String imageUrl;
   final List<String> types;
 
-  final Map<String, Color> typeColors = {
+  static const Map<String, Color> typeColors = {
     'fire': Colors.red,
     'water': Colors.blue,
     'grass': Colors.green,
     'electric': Colors.yellow,
     'poison': Colors.purple,
-    // Agrega más tipos y colores según sea necesario
+    'flying': Colors.blueGrey,
+    'bug': Colors.lightGreen,
+    
   };
+
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+      width: size.width * 0.4,
+      height: size.height * 0.25,
+      decoration:  BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(25)),
+        border: Border.fromBorderSide(
+          types.map( (type) => BorderSide(color: typeColors[type] ?? Colors.grey, width: 2)).first,
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.network(imageUrl, width: 100),
+          Text(
+            name,
+            style: GoogleFonts.pressStart2p(fontSize: 16),
+          ),
+          /* Text(description, style: GoogleFonts.pressStart2p(fontSize: 6)), */
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: types.map((type) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: _buildTypeText(type),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildTypeText(String type) {
     Color backgroundColor = typeColors[type] ?? Colors.grey;
@@ -45,42 +84,6 @@ class PokeContainer extends StatelessWidget {
       ),
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-      width: size.width * 0.4,
-      height: size.height * 0.25,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(25)),
-        border: Border.fromBorderSide(
-          BorderSide(
-            width: 5,
-            color: Colors.blue,
-          ),
-        ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.network(imageUrl, width: 100),
-          Text(
-            name,
-            style: GoogleFonts.pressStart2p(fontSize: 16),
-          ),
-          Text(description, style: GoogleFonts.pressStart2p(fontSize: 3)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: types.map((type) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: _buildTypeText(type),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
 }
+
+
