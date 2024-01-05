@@ -27,7 +27,7 @@ class PokeScreen extends StatelessWidget {
                 text: 'Mon',
                 style: GoogleFonts.pressStart2p(
                   fontSize: 20,
-                  color: const Color(0XFFFFCC00), 
+                  color: Colors.white, 
                 ),
               ),
             ],
