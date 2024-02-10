@@ -47,7 +47,7 @@ class PokeService extends ChangeNotifier {
                 final language = entry['language']['name'];
                 return language == 'es';
               })['flavor_text'];
-              print(pokemonDescription);
+              
               final pokemonTypes = <String>[
                 for (var typeEntry in pokemonDetails['types'] ?? [])
                   typeEntry['type']['name']
